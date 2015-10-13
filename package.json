@@ -1,0 +1,13 @@
+{
+  "title": "Modify/Delete cookies",
+  "name": "firefox-modify-delete-cookies",
+  "version": "1.0.0",
+  "description": "Yet another add-on to manipulate cookies",
+  "main": "index.js",
+  "author": "",
+  "engines": {
+    "firefox": ">=38.0a1",
+    "fennec": ">=38.0a1"
+  },
+  "license": "MIT"
+}
