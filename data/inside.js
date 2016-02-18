@@ -76,6 +76,7 @@ function createTable(cookies) {
 	    createElement("td", [del]),
 	    createElement("td", [textNode(c.name)], { className: 'cookieName' }),
 	    createElement("td", [form]),
+	    createElement("td", c.path === '/' ? []: [textNode(c.path)]),
 	]);
     });
     var table = createElement("table", trs);

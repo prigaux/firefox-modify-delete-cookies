@@ -28,13 +28,14 @@ function getCookiesRaw(host) {
     return r;
 }
 
-function getCookies(host) {
+function getCookies(host, path) {
     let r = [];
     let r_domain = [];
 
     let domain = host.replace(/[^.]*/, '');
     
     getCookiesRaw(host).forEach(cookie => {
+        if (!path.startsWith(cookie.path)) return;
 	if (cookie.host === host || cookie.host === "."+host) {
 	    r.unshift(cookie);
 	} else if (cookie.host === domain) { // getCookiesFromHost is buggy, ignore cookies not matching nor host nor domain
@@ -47,10 +48,11 @@ function getCookies(host) {
 function doIt() {
     let tab = tabs.activeTab;
     let host = url.URL(tab.url).host;
+    let path = url.URL(tab.url).path;
 
     let worker = tab.attach({
 	contentScriptFile: self.data.url("inside.js"),
-	contentScriptOptions: {cookies: getCookies(host)}
+	contentScriptOptions: {cookies: getCookies(host, path)}
     });
     worker.port.on("removeCookie", message => {
 	let cookie = JSON.parse(message);
