@@ -1,0 +1,28 @@
+{
+  "browser_action": {
+    "browser_style": true,
+    "default_title": "Cookies in the active tab",
+    "default_popup": "cookies.html",
+    "default_icon": {
+      "19": "icons/default19.png",
+      "38": "icons/default38.png"
+    }
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+F12"
+      }
+    }
+  },
+  "description": "Cookies in the active tab.",
+  "icons": {
+    "48": "icons/cookie.png",
+    "96": "icons/cookie@2x.png"
+  },
+  "homepage_url": "https://github.com/prigaux/firefox-modify-delete-cookies",
+  "manifest_version": 2,
+  "name": "Cookies in the active tab.",
+  "version": "1.0",
+  "permissions": ["cookies","<all_urls>","tabs"]
+}

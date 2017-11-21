@@ -1,0 +1,18 @@
+html, body, input {
+  font-size: 90%;
+  margin: 0 0.2rem 0.2rem;
+}
+
+p {
+    margin: 0.4rem 0 0 0;
+}
+
+.cookieName { 
+    max-width: 10em; overflow: hidden;
+}
+input { 
+    width: 30em;
+}
+form {
+    margin-bottom: 0
+}
