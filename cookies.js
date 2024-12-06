@@ -21,9 +21,8 @@ function setCookie(c) {
     }
 }
 
-function removeIt(c, that) {
+function removeIt(c) {
     browser.cookies.remove(pick(c, ['name', 'url']));
-    that.parentElement.parentElement.style.visibility = 'hidden';
 }
 
 function modifyIt(c, that, event) {
@@ -54,12 +53,18 @@ function createElement(tag, children, attrs) {
     return elt;
 }
 
-function cookieLine(c) {
+function delButton(cb) {
     let del = createElement("img", [], {
         width: "20", alt: "del", src: "https://upload.wikimedia.org/wikipedia/commons/b/bc/Page-delete.png?uselang=fr",
-        onclick: function () { removeIt(c, del) },
-    });
+        onclick: function () { 
+            cb() 
+            del.parentElement.parentElement.style.visibility = 'hidden';
+        },
+    })
+    return del  
+}
 
+function cookieLine(c) {
     let input = createElement("input", [], { name: "val", value: c.value });
     let form = createElement("form", [input], {
         onsubmit: function(event) { return modifyIt(c, input, event); },
@@ -67,7 +72,7 @@ function cookieLine(c) {
     
     let tr = createElement("tr", [
         //createElement("td", [textNode(c.host)]),
-        createElement("td", [del]),
+        createElement("td", [delButton(() => removeIt(c))]),
         createElement("td", [textNode(c.name)], { className: 'cookieName' }),
         createElement("td", [form]),
         createElement("td", c.path === '/' ? []: [textNode(c.path)]),
@@ -84,7 +89,10 @@ function showCookiesForTabRaw(tab) {
     let byDomain = groupBy(cookies, c => c.hostOnly ? '' : c.domain);
     Object.keys(byDomain).sort().forEach(domain => {
         let trs = byDomain[domain].map(cookieLine);
-        cookieList.appendChild(createElement("p", [textNode((domain || 'App') + ' cookies:')]));
+        cookieList.appendChild(createElement("p", [ 
+            textNode((domain || 'App') + ' cookies:'), 
+            delButton(() => cookies.forEach(removeIt)),
+        ]));
         cookieList.appendChild(createElement("table", trs));
     });
   });
